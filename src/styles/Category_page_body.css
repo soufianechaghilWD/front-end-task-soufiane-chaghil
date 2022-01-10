@@ -1,0 +1,29 @@
+.category_page{
+    margin: 68px 100px 50px ;
+}
+.category_page > h1{
+    margin-bottom: 103px;
+}
+.category_page_product__container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.category_page_product{
+    width: 300px;
+    margin: 0 1.5rem 2.5rem ;
+    color: black;
+}
+.category_page_product > img{
+    width: 100%;
+    height: 330px;
+    object-fit: cover;
+}
+.category_page_product > p{
+    font-size: 18px;
+    padding-top: 24px;
+}
+.category_page_product > h4{
+    font-weight: 800;
+    font-size: 18px;
+}

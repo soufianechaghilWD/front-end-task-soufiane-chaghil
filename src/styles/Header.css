@@ -1,0 +1,109 @@
+.header{
+    height: 80px;
+}
+.header__container{
+    display: flex;
+    justify-content: space-between;
+    height: 100%;
+    /* align-items: center; */
+    padding: 0 3rem;
+}
+.header__container > ul{
+    display: flex;
+    list-style: none;
+    flex: 0.25;
+    justify-content: space-between;
+    font-weight: 600;
+}
+.header_item {
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 800;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 8px;
+}
+.active_header_item{
+    color: #5ECE7B;
+    border-bottom: 2px solid #5ECE7B;
+}
+.header__logo{
+    display: flex;
+    align-items: center;
+}
+.header__logo > img{
+    cursor: pointer;
+}
+.header__currency__cart{
+    flex: 0.25;
+    margin-right: 3rem;
+    display: flex;
+    justify-content: right;
+}
+.header__currency > div{
+    font-size: 18px;
+    font-weight: 800;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    min-width: 75px;
+    position: relative;
+}
+.header__currency > div > p{
+    cursor: pointer;
+}
+.header__currency > div > img{
+    margin-left: 0.4rem;
+    cursor: pointer;
+}
+.currencies__dropdown{
+    position: absolute;
+    top: 100%;
+    left: 0;
+    list-style: none;
+    padding: 0;
+    background: white;
+    z-index: 99;
+}
+.currencies__dropdown > li{
+    cursor: pointer;
+    padding: 0.5rem 0;
+}
+.header__cart{
+    display: flex;
+    align-items: center;
+}
+.header__cart > div{
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+.header__cart > div > img{
+    cursor: pointer;
+}
+.header__cart > div > h5{
+    background: black;
+    color: white;
+    font-size: 14px;
+    font-weight: 700;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+    margin-left: -0.3rem;
+    cursor: pointer;
+}
+.cart__overlay{
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 325px;
+    max-height: 540px;
+    background: white;
+    z-index: 99;
+}
