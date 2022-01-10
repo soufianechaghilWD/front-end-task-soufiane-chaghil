@@ -46,7 +46,10 @@ class Header extends Component {
     }
   }
 
+
   render() {
+
+    console.log("the state is : ", this.props.header_active_item, this.props.currency, this.props.cart)
 
 
     const setHeaderActiveItem = (new_header_item) => {
