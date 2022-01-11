@@ -9,7 +9,6 @@ import Currency from "./Currency";
 import Cart from "./Cart";
 import { Link, Navigate } from "react-router-dom";
 
-
 const get_categories_query = gql`
   query {
     categories {
@@ -27,44 +26,36 @@ const get_currency_query = gql`
   }
 `;
 
-
 class Header extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
       header_active_item: this.props.header_active_item,
       currency: this.props.currency,
-      redirect_sts: false
+      redirect_sts: false,
     };
-
   }
 
   componentDidUpdate() {
-    if(this.state.redirect_sts === true){
-      this.setState({redirect_sts: false})
+    if (this.state.redirect_sts === true) {
+      this.setState({ redirect_sts: false });
     }
   }
 
-
   render() {
-
-    console.log("the state is : ", this.props.header_active_item, this.props.currency, this.props.cart)
-
-
     const setHeaderActiveItem = (new_header_item) => {
       this.props.dispatch({
         type: "SET_HEADER_ACTIVE_ITEM",
         payload: new_header_item,
       });
-      this.setState({ header_active_item: new_header_item});
-      if(window.location.pathname !== "/"){
-        this.setState({redirect_sts: true})
+      this.setState({ header_active_item: new_header_item });
+      if (window.location.pathname !== "/") {
+        this.setState({ redirect_sts: true });
       }
     };
 
-    if(this.state.redirect_sts === true){
-      return <Navigate to="/" />
+    if (this.state.redirect_sts === true) {
+      return <Navigate to="/" />;
     }
 
     return (
@@ -94,16 +85,16 @@ class Header extends Component {
           </Query>
           <div className="header__logo">
             <Link to="/">
-            <img src={Logo} alt="Logo" />
+              <img src={Logo} alt="Logo" />
             </Link>
           </div>
           <div className="header__currency__cart">
             <Query query={get_currency_query}>
               {({ loading, data }) => {
-                if(loading === false){
-                  return <Currency currencies={data.currencies} />
-                }else{
-                  return <h1>Loading</h1>
+                if (loading === false) {
+                  return <Currency currencies={data.currencies} />;
+                } else {
+                  return <h1>Loading</h1>;
                 }
               }}
             </Query>

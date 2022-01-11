@@ -32,16 +32,16 @@ class Product extends Component {
     };
 
     const addToCart = () => {
-        var the_added_item = {
-            atts: this.state.selectedAtts,
-            item_id: this?.props?.product?.id
-        }
-        this?.props?.dispatch({
-            type: "ADD_ITEM",
-            payload: the_added_item
-        })
-    }
-
+      var the_added_item = {
+        atts: this.state.selectedAtts,
+        item: this?.props?.product,
+        howMany: 1,
+      };
+      this?.props?.dispatch({
+        type: "ADD_ITEM",
+        payload: the_added_item,
+      });
+    };
 
     return (
       <div className="product">
@@ -125,7 +125,30 @@ class Product extends Component {
                 )[0]?.amount}
             </h3>
           </div>
-          <button onClick={addToCart} disabled={this?.props?.cart?.filter(x => x?.item_id === this?.props?.product?.id)?.length > 0} style={{background: this?.props?.cart?.filter(x => x?.item_id === this?.props?.product?.id)?.length > 0 ? "gray" : "#5ECE7B", cursor: this?.props?.cart?.filter(x => x?.item_id === this?.props?.product?.id)?.length > 0 ? "initial": 'pointer'}} >ADD TO CART</button>
+          <button
+            onClick={addToCart}
+            disabled={
+              this?.props?.cart?.filter(
+                (x) => x?.item?.id === this?.props?.product?.id
+              )?.length > 0
+            }
+            style={{
+              background:
+                this?.props?.cart?.filter(
+                  (x) => x?.item?.id === this?.props?.product?.id
+                )?.length > 0
+                  ? "gray"
+                  : "#5ECE7B",
+              cursor:
+                this?.props?.cart?.filter(
+                  (x) => x?.item?.id === this?.props?.product?.id
+                )?.length > 0
+                  ? "initial"
+                  : "pointer",
+            }}
+          >
+            ADD TO CART
+          </button>
           <div id="product__desc"></div>
         </div>
       </div>

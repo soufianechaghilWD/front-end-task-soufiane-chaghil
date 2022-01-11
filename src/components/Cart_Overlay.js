@@ -1,19 +1,29 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Header from "../../components/Header";
-import mapStateToProps from "../../mapStateToProps";
-import "../../styles/Cart.css";
-import Product_Imgs from "./Product_Imgs";
+import { Link } from "react-router-dom";
+import mapStateToProps from "../mapStateToProps";
 
-class Index extends Component {
+class Cart_Overlay extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
-      cart: this.props.cart,
+      cart: this?.props?.cart,
     };
   }
 
   render() {
+    const get_The_Total = (cart, label) => {
+      var res = 0;
+      for (let i = 0; i < cart?.length; i++) {
+        res +=
+          cart[i]?.item?.prices?.filter(
+            (ele) => ele?.currency?.label === label
+          )[0]?.amount * cart[i]?.howMany;
+      }
+      return res.toFixed(2);
+    };
+
     const increase_item = (item_id) => {
       this.props?.dispatch({ type: "INCREASE_ITEM", payload: item_id });
       this.setState({ cart: this.props?.cart });
@@ -25,29 +35,30 @@ class Index extends Component {
     };
 
     return (
-      <div>
-        <Header />
-        <div className="cart__body">
-          <h1>CART</h1>
-          <div className="cart__wraper">
-            {this.state?.cart?.map((ele, idx) => (
-              <div className="cart__product" key={"id" + idx}>
-                <div className="cart__product__info">
-                  <div className="cart__product__info__body">
-                    <h2>{ele?.item?.brand}</h2>
-                    <h3>{ele?.item?.name}</h3>
-                    <h4>
+      <div className="cart__overlay">
+        <div className="cart__overlay__body">
+          <h4>
+            <span>My Bag,</span> {this.state.cart.length} items
+          </h4>
+          <div className="cart__overlay__products">
+            {this.state.cart.map((ele, idx) => (
+              <div className="cart__overlay__product" key={"id" + idx}>
+                <div className="cart__overlay__product__info">
+                  <div className="cart__overlay__product__info__body">
+                    <h3>{ele?.item?.brand}</h3>
+                    <h4>{ele?.item?.name}</h4>
+                    <h5>
                       {this.props?.currency?.symbol +
                         ele?.item?.prices?.filter(
                           (it) =>
                             it?.currency?.label === this.props?.currency?.label
                         )[0]?.amount *
                           ele?.howMany}
-                    </h4>
-                    <div className="cart__product__info__atts">
+                    </h5>
+                    <div className="cart__overlay__product__info__atts">
                       {ele?.item?.attributes?.map((singleAtr, idx) => (
                         <div
-                          className="cart__product__info__single_att"
+                          className="cart__overlay__product__info__single_att"
                           key={"id" + idx}
                         >
                           {singleAtr?.items?.map((itemAtr, idx) => {
@@ -86,6 +97,7 @@ class Index extends Component {
                                       itemAtr?.id
                                         ? "1px solid #1D1F22"
                                         : "1px solid #A6A6A6",
+                                    fontSize: "12px",
                                   }}
                                 >
                                   {itemAtr?.displayValue === "Small"
@@ -105,7 +117,7 @@ class Index extends Component {
                       ))}
                     </div>
                   </div>
-                  <div className="cart__product__info__howMany">
+                  <div className="cart__overlay__product__info__howMany">
                     <div
                       onClick={() => increase_item(ele?.item?.id)}
                       style={{ cursor: "pointer" }}
@@ -123,11 +135,24 @@ class Index extends Component {
                     </div>
                   </div>
                 </div>
-                <div className="cart__product_pics">
-                  <Product_Imgs imgs={ele?.item?.gallery} />
+                <div className="cart__overlay__product__pic">
+                  <img src={ele?.item?.gallery[0]} alt="cart_overlay" />
                 </div>
               </div>
             ))}
+          </div>
+          <div className="cart__total">
+            <h5>Total</h5>
+            <p>
+              {this?.props?.currency?.symbol +
+                get_The_Total(this.state.cart, this.props.currency.label)}
+            </p>
+          </div>
+          <div className="cart__btn">
+            <Link to="/cart" style={{ textDecoration: "none" }}>
+              <p className="cart__btn__bag">VIEW BAG</p>
+            </Link>
+            <button className="cart__btn__checkout">CHECK OUT</button>
           </div>
         </div>
       </div>
@@ -135,4 +160,4 @@ class Index extends Component {
   }
 }
 
-export default connect(mapStateToProps)(Index);
+export default connect(mapStateToProps)(Cart_Overlay);

@@ -11,16 +11,16 @@ class Currency extends Component {
       currency: this.props.currencies[0],
       openCurrenciesDropDown: false,
     };
-}
+  }
 
   componentDidMount() {
-    if(this.props.currency === null){
+    if (this.props.currency === null) {
       this.props.dispatch({
         type: "SET_CURRENCY",
         payload: this.props.currencies[0],
-      });  
-    }else{
-      this.setState({currency: this.props.currency})
+      });
+    } else {
+      this.setState({ currency: this.props.currency });
     }
   }
 
@@ -36,11 +36,15 @@ class Currency extends Component {
     return (
       <div className="header__currency">
         <div>
-          <p onClick={() =>
+          <p
+            onClick={() =>
               this.setState({
                 openCurrenciesDropDown: !this.state.openCurrenciesDropDown,
               })
-            }>{this.state.currency.symbol}</p>
+            }
+          >
+            {this.state.currency.symbol}
+          </p>
           <img
             onClick={() =>
               this.setState({
