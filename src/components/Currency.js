@@ -11,9 +11,13 @@ class Currency extends Component {
       currency: this.props.currencies[0],
       openCurrenciesDropDown: false,
     };
+    this.wrapperRef = React.createRef();
+    this.setWrapperRef = this?.setWrapperRef?.bind(this);
+    this.handleClickOutside = this?.handleClickOutside?.bind(this);
   }
 
   componentDidMount() {
+    document.addEventListener("mousedown", this?.handleClickOutside);
     if (this.props.currency === null) {
       this.props.dispatch({
         type: "SET_CURRENCY",
@@ -24,9 +28,22 @@ class Currency extends Component {
     }
   }
 
+  componentWillUnmount() {
+    document?.removeEventListener("mousedown", this?.handleClickOutside);
+  }
+
+  handleClickOutside(event) {
+    if (
+      this?.wrapperRef &&
+      !this?.wrapperRef?.current?.contains(event?.target)
+    ) {
+      this?.setState({ openCurrenciesDropDown: false });
+    }
+  }
+
   render() {
     const setCurrency = (currency) => {
-      this.props.dispatch({ type: "SET_CURRENCY", payload: currency });
+      this?.props.dispatch({ type: "SET_CURRENCY", payload: currency });
       this.setState({
         currency: currency,
         openCurrenciesDropDown: !this.state.openCurrenciesDropDown,
@@ -55,7 +72,7 @@ class Currency extends Component {
             alt="Vector"
           />
           {this.state.openCurrenciesDropDown && (
-            <ul className="currencies__dropdown">
+            <ul className="currencies__dropdown" ref={this?.wrapperRef}>
               {this.props?.currencies?.map((ele, idx) => (
                 <li key={"id" + idx} onClick={() => setCurrency(ele)}>
                   {ele?.symbol + " " + ele?.label}

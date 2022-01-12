@@ -20,23 +20,24 @@ class Product extends Component {
   }
 
   componentDidMount() {
-    var ele = document.getElementById("product__desc");
+    const ele = document.getElementById("product__desc");
     ele.innerHTML = this?.props?.product?.description;
   }
 
   render() {
     const setSelectedAtt = (name, item) => {
-      var new_obj = this.state?.selectedAtts;
+      var new_obj = Object?.assign({}, this.state?.selectedAtts);
       new_obj[name] = item;
       this.setState({ selectedAtts: new_obj });
     };
 
     const addToCart = () => {
-      var the_added_item = {
+      const the_added_item = {
         atts: this.state.selectedAtts,
         item: this?.props?.product,
         howMany: 1,
       };
+
       this?.props?.dispatch({
         type: "ADD_ITEM",
         payload: the_added_item,
@@ -94,18 +95,12 @@ class Product extends Component {
                         <div
                           onClick={() => setSelectedAtt(ele?.name, item)}
                           key={"id" + id}
-                          style={{
-                            background:
-                              this?.state?.selectedAtts[ele?.name]?.id ===
-                              item?.id
-                                ? "black"
-                                : "white",
-                            color:
-                              this?.state?.selectedAtts[ele?.name]?.id ===
-                              item?.id
-                                ? "white"
-                                : "black",
-                          }}
+                          className={
+                            this?.state?.selectedAtts[ele?.name]?.id ===
+                            item?.id
+                              ? "product__atribut__wraper__selected"
+                              : "product__atribut__wraper__unselected"
+                          }
                         >
                           {item?.displayValue}
                         </div>
@@ -127,25 +122,6 @@ class Product extends Component {
           </div>
           <button
             onClick={addToCart}
-            disabled={
-              this?.props?.cart?.filter(
-                (x) => x?.item?.id === this?.props?.product?.id
-              )?.length > 0
-            }
-            style={{
-              background:
-                this?.props?.cart?.filter(
-                  (x) => x?.item?.id === this?.props?.product?.id
-                )?.length > 0
-                  ? "gray"
-                  : "#5ECE7B",
-              cursor:
-                this?.props?.cart?.filter(
-                  (x) => x?.item?.id === this?.props?.product?.id
-                )?.length > 0
-                  ? "initial"
-                  : "pointer",
-            }}
           >
             ADD TO CART
           </button>

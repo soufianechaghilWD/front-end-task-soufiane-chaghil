@@ -1,4 +1,3 @@
-import { gql } from "@apollo/client";
 import { Query } from "@apollo/client/react/components";
 import React, { Component } from "react";
 import { connect } from "react-redux";
@@ -8,31 +7,22 @@ import "../styles/Header.css";
 import Currency from "./Currency";
 import Cart from "./Cart";
 import { Link, Navigate } from "react-router-dom";
+import Cart_Overlay from "./CartOverlay";
+import { get_categories_query, get_currency_query } from "../gqlQueries";
 
-const get_categories_query = gql`
-  query {
-    categories {
-      name
-    }
-  }
-`;
 
-const get_currency_query = gql`
-  query {
-    currencies {
-      label
-      symbol
-    }
-  }
-`;
+
 
 class Header extends Component {
+
   constructor(props) {
     super(props);
+
     this.state = {
       header_active_item: this.props.header_active_item,
-      currency: this.props.currency,
+      dispatch: this.props.dispatch,
       redirect_sts: false,
+      openCartDropDown: false,
     };
   }
 
@@ -43,8 +33,14 @@ class Header extends Component {
   }
 
   render() {
+
+    const {header_active_item, dispatch, redirect_sts, openCartDropDown} = this?.state
+    const setOpenCartDropDown = () => {
+      this.setState({ openCartDropDown: !openCartDropDown });
+    };
+
     const setHeaderActiveItem = (new_header_item) => {
-      this.props.dispatch({
+      dispatch({
         type: "SET_HEADER_ACTIVE_ITEM",
         payload: new_header_item,
       });
@@ -54,14 +50,14 @@ class Header extends Component {
       }
     };
 
-    if (this.state.redirect_sts === true) {
+    if ( redirect_sts === true) {
       return <Navigate to="/" />;
     }
 
     return (
       <div className="header">
         <div className="header__container">
-          <Query query={get_categories_query}>
+          <Query query={get_categories_query()}>
             {({ loading, data }) => {
               return (
                 <ul>
@@ -69,7 +65,7 @@ class Header extends Component {
                     <li
                       onClick={() => setHeaderActiveItem(ele?.name)}
                       className={`header_item ${
-                        ele?.name === this?.state?.header_active_item
+                        ele?.name === header_active_item
                           ? "active_header_item"
                           : ""
                       }`}
@@ -89,7 +85,7 @@ class Header extends Component {
             </Link>
           </div>
           <div className="header__currency__cart">
-            <Query query={get_currency_query}>
+            <Query query={get_currency_query()}>
               {({ loading, data }) => {
                 if (loading === false) {
                   return <Currency currencies={data.currencies} />;
@@ -98,9 +94,15 @@ class Header extends Component {
                 }
               }}
             </Query>
-            <Cart />
+            <Cart
+              openCartDropDown={openCartDropDown}
+              setOpenCartDropDown={setOpenCartDropDown}
+            />
           </div>
         </div>
+        {openCartDropDown === true && (
+          <Cart_Overlay setOpenCartDropDown={setOpenCartDropDown} />
+        )}
       </div>
     );
   }

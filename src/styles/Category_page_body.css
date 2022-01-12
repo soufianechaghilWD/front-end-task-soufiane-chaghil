@@ -6,14 +6,21 @@
     margin-bottom: 103px;
 }
 .category_page_product__container{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+.category_page_product__container > a{
+    display: block;
+    margin: auto;
 }
 .category_page_product{
     width: 300px;
     margin: 0 1.5rem 2.5rem ;
     color: black;
+}
+.category_page_product:hover{
+    transform: scale(1.1);
+    transition: .1s ease-in-out;
 }
 .category_page_product > div{
     position: relative;

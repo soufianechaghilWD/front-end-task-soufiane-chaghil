@@ -57,6 +57,14 @@
     align-items: center;
     cursor: pointer;
 }
+.product__atribut__wraper__selected{
+    background: black;
+    color: white;
+}
+.product__atribut__wraper__unselected{
+    background: white;
+    color: black;
+}
 .product__atribut__wraper > div:not(:first-child){
     margin: 0 0.5rem;
 }
@@ -72,4 +80,6 @@
     border: none;
     font-weight: 900;
     margin: 0 0 1rem;
+    background: #5ECE7B;
+    cursor: pointer;
 }

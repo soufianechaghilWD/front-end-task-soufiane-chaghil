@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import mapStateToProps from "../../mapStateToProps";
 import Header from "../../components/Header";
 import "../../App.css";
-import Category_page_body from "./Category_page_body";
+import Category_page_body from "./CategoryPageBody";
 
 class Index extends Component {
   render() {

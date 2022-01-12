@@ -1,5 +1,6 @@
 .header{
     height: 80px;
+    position: relative
 }
 .header__container{
     display: flex;
@@ -14,6 +15,7 @@
     justify-content: space-between;
     font-weight: 600;
     padding-left: 5rem;
+    max-width: 300px;
 }
 .header_item {
     cursor: pointer;
@@ -70,16 +72,25 @@
     cursor: pointer;
     padding: 0.5rem 0;
 }
+.currencies__dropdown > li:hover{
+    transform: scale(1.1);
+    transition: 0.2s ease-in-out;
+}
 .header__cart{
     display: flex;
     align-items: center;
 }
 .header__cart > div{
     padding-right: 3rem;
-    position: relative;
     height: 100%;
     display: flex;
     align-items: center;
+}
+.img_pointer{
+    cursor: pointer;
+}
+.image_unset{
+    cursor: unset;
 }
 .header__cart > div > h5{
     background: black;
@@ -97,12 +108,10 @@
 }
 .cart__overlay{
     position: absolute;
-    top: 100%;
-    right: 0;
-    width: 100vw;
-    min-height: 100vh;
-    background: rgba(128, 128, 128, .4);
     z-index: 999;
+    background: rgba(57, 55, 72, 0.22);
+    width: 100%;
+    min-height: 100vh;
 }
 .cart__overlay__body{
     float: right;
@@ -131,6 +140,7 @@
 }
 .cart__overlay__product__info{
     display: flex;
+    flex: 1;
 }
 .cart__overlay__product__info__body{
     flex: 1;
@@ -158,20 +168,45 @@
     justify-content: center;
     align-items: center;
 }
+.cart__overlay__product__info__howMany__p__no__border{
+    border: none !important;
+}
+.cart__overlay__product__info__atts{
+    margin: 1.5rem 0;
+}
+.cart__overlay__product__info__atts > h5{
+    margin-top: 1.5rem;
+}
 .cart__overlay__product__info__single_att{
     display: flex;
-    margin: 1rem 0;
+    margin: 0.5rem 0 1rem;
 }
 .cart__overlay__product__info__single_att > div{
-    width: 30px;
-    height: 30px;
+    width: 35px;
+    height: 35px;
     margin: 0 2px;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 12px !important;
+}
+.cart__overlay__product__info__single_att__selected{
+    background: white;
+    color: black;
+    border: 1px solid #1D1F22;
+}
+.cart__overlay__product__info__single_att__unselected{
+    background: #A6A6A633;
+    color: #A6A6A6;
+    border: 1px solid #A6A6A6;
+}
+.cart__overlay__product__pic{
+    display: flex;
+    align-items: center;
+    width: 105px;
 }
 .cart__overlay__product__pic > img{
-    width: 105px;
+    width: 100%;
 }
 .cart__total{
     width: 100%;
