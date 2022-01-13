@@ -37,6 +37,16 @@ export const get_products_in_category = (active_item) => {
               }
               amount
             }
+            attributes{
+              id
+                name
+              type
+              items{
+                displayValue
+                value
+                id
+              }
+            }
           }
         }
       }`;

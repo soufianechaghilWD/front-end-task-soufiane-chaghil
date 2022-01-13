@@ -19,11 +19,6 @@ class Product extends Component {
     };
   }
 
-  componentDidMount() {
-    const ele = document.getElementById("product__desc");
-    ele.innerHTML = this?.props?.product?.description;
-  }
-
   render() {
     const setSelectedAtt = (name, item) => {
       var new_obj = Object?.assign({}, this.state?.selectedAtts);
@@ -67,49 +62,50 @@ class Product extends Component {
             <h2>{this?.props?.product?.name}</h2>
           </div>
           <div>
-            {this?.props?.product?.attributes?.map((ele, idx) => (
-              <div key={"id" + idx} className="product__atribut">
-                <h3>{ele?.name?.toUpperCase()}:</h3>
-                <div className="product__atribut__wraper">
-                  {ele?.items?.map((item, id) => {
-                    if (ele?.type === "swatch") {
-                      return (
-                        <div
-                          onClick={() => setSelectedAtt(ele?.name, item)}
-                          key={"id" + id}
-                          style={{
-                            background: `${item?.value}`,
-                            color: `${item?.value}`,
-                            border:
-                              this?.state?.selectedAtts[ele?.name]?.id ===
-                              item?.id
-                                ? "3px solid black"
-                                : "1px solid #A6A6A6",
-                          }}
-                        >
-                          {item?.displayValue}
-                        </div>
-                      );
-                    } else {
-                      return (
-                        <div
-                          onClick={() => setSelectedAtt(ele?.name, item)}
-                          key={"id" + id}
-                          className={
-                            this?.state?.selectedAtts[ele?.name]?.id ===
-                            item?.id
-                              ? "product__atribut__wraper__selected"
-                              : "product__atribut__wraper__unselected"
-                          }
-                        >
-                          {item?.displayValue}
-                        </div>
-                      );
-                    }
-                  })}
+            {this?.props?.product?.attributes?.map((ele, idx) => {
+              const { name, items, type } = ele;
+              return (
+                <div key={"id" + idx} className="product__atribut">
+                  <h3>{name?.toUpperCase()}:</h3>
+                  <div className="product__atribut__wraper">
+                    {items?.map((item, id) => {
+                      if (type === "swatch") {
+                        return (
+                          <div
+                            onClick={() => setSelectedAtt(name, item)}
+                            key={"id" + id}
+                            style={{
+                              background: `${item?.value}`,
+                              color: `${item?.value}`,
+                              border:
+                                this?.state?.selectedAtts[name]?.id === item?.id
+                                  ? "3px solid black"
+                                  : "1px solid #A6A6A6",
+                            }}
+                          >
+                            {item?.displayValue}
+                          </div>
+                        );
+                      } else {
+                        return (
+                          <div
+                            onClick={() => setSelectedAtt(name, item)}
+                            key={"id" + id}
+                            className={
+                              this?.state?.selectedAtts[name]?.id === item?.id
+                                ? "product__atribut__wraper__selected"
+                                : "product__atribut__wraper__unselected"
+                            }
+                          >
+                            {item?.displayValue}
+                          </div>
+                        );
+                      }
+                    })}
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
           <div>
             <h3>PRICE:</h3>
@@ -120,12 +116,8 @@ class Product extends Component {
                 )[0]?.amount}
             </h3>
           </div>
-          <button
-            onClick={addToCart}
-          >
-            ADD TO CART
-          </button>
-          <div id="product__desc"></div>
+          <button onClick={addToCart}>ADD TO CART</button>
+          <div dangerouslySetInnerHTML={{__html: this?.props?.product?.description}} ></div>
         </div>
       </div>
     );

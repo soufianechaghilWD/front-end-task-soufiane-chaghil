@@ -10,7 +10,7 @@ class Cart_Overlay extends Component {
     this.state = {
       cart: this?.props?.cart,
       dispatch: this?.props?.dispatch,
-      currency: this?.props?.currency
+      currency: this?.props?.currency,
     };
 
     this.wrapperRef = React.createRef();
@@ -36,8 +36,7 @@ class Cart_Overlay extends Component {
   }
 
   render() {
-
-    const {cart, dispatch, currency} = this?.state
+    const { cart, dispatch, currency } = this?.state;
 
     const get_The_Total = (cart, label) => {
       var res = 0;
@@ -75,102 +74,104 @@ class Cart_Overlay extends Component {
             <span>My Bag,</span> {cart.length} items
           </h4>
           <div className="cart__overlay__products">
-            {cart.map((ele, idx) => (
-              <div className="cart__overlay__product" key={"id" + idx}>
-                <div className="cart__overlay__product__info">
-                  <div className="cart__overlay__product__info__body">
-                    <h3>{ele?.item?.brand}</h3>
-                    <h4>{ele?.item?.name}</h4>
-                    <h5>
-                      {currency?.symbol +
-                        ele?.item?.prices?.filter(
-                          (it) =>
-                            it?.currency?.label === currency?.label
-                        )[0]?.amount *
-                          ele?.howMany}
-                    </h5>
-                    <div className="cart__overlay__product__info__atts">
-                      {ele?.item?.attributes?.map((singleAtr, idx) => (
-                        <div key={"id" + idx}>
-                          <h5>{singleAtr?.name?.toUpperCase()}</h5>
-                          <div className="cart__overlay__product__info__single_att">
-                            {singleAtr?.items?.map((itemAtr, idx) => {
-                              if (singleAtr?.type === "swatch") {
-                                return (
-                                  <div
-                                    key={"id" + idx}
-                                    style={{
-                                      background: `${itemAtr?.value}`,
-                                      color: `${itemAtr?.value}`,
-                                      border:
-                                        ele?.atts[singleAtr?.name]?.id ===
+            {cart.map((ele, idx) => {
+              const { atts, item, howMany } = ele;
+              const { brand, name, prices, attributes, id, gallery } = item;
+
+              return (
+                <div className="cart__overlay__product" key={"id" + idx}>
+                  <div className="cart__overlay__product__info">
+                    <div className="cart__overlay__product__info__body">
+                      <h3>{brand}</h3>
+                      <h4>{name}</h4>
+                      <h5>
+                        {currency?.symbol +
+                          prices?.filter(
+                            (it) => it?.currency?.label === currency?.label
+                          )[0]?.amount *
+                            howMany}
+                      </h5>
+                      <div className="cart__overlay__product__info__atts">
+                        {attributes?.map((singleAtr, idx) => (
+                          <div key={"id" + idx}>
+                            <h5>{singleAtr?.name?.toUpperCase()}</h5>
+                            <div className="cart__overlay__product__info__single_att">
+                              {singleAtr?.items?.map((itemAtr, idx) => {
+                                if (singleAtr?.type === "swatch") {
+                                  return (
+                                    <div
+                                      key={"id" + idx}
+                                      style={{
+                                        background: `${itemAtr?.value}`,
+                                        color: `${itemAtr?.value}`,
+                                        border:
+                                          atts[singleAtr?.name]?.id ===
+                                          itemAtr?.id
+                                            ? "3px solid black"
+                                            : "1px solid #A6A6A6",
+                                      }}
+                                    ></div>
+                                  );
+                                } else {
+                                  return (
+                                    <div
+                                      key={"id" + idx}
+                                      className={
+                                        atts[singleAtr?.name]?.id ===
                                         itemAtr?.id
-                                          ? "3px solid black"
-                                          : "1px solid #A6A6A6",
-                                    }}
-                                  ></div>
-                                );
-                              } else {
-                                return (
-                                  <div
-                                    key={"id" + idx}
-                                    className={
-                                      ele?.atts[singleAtr?.name]?.id ===
-                                      itemAtr?.id
-                                        ? "cart__overlay__product__info__single_att__selected"
-                                        : "cart__overlay__product__info__single_att__unselected"
-                                    }
-                                  >
-                                    {itemAtr?.displayValue === "Small"
-                                      ? "S"
-                                      : itemAtr?.displayValue === "Medium"
-                                      ? "M"
-                                      : itemAtr?.displayValue === "Large"
-                                      ? "L"
-                                      : itemAtr?.displayValue === "Extra Large"
-                                      ? "XL"
-                                      : itemAtr?.displayValue}
-                                  </div>
-                                );
-                              }
-                            })}
+                                          ? "cart__overlay__product__info__single_att__selected"
+                                          : "cart__overlay__product__info__single_att__unselected"
+                                      }
+                                    >
+                                      {itemAtr?.displayValue === "Small"
+                                        ? "S"
+                                        : itemAtr?.displayValue === "Medium"
+                                        ? "M"
+                                        : itemAtr?.displayValue === "Large"
+                                        ? "L"
+                                        : itemAtr?.displayValue ===
+                                          "Extra Large"
+                                        ? "XL"
+                                        : itemAtr?.displayValue}
+                                    </div>
+                                  );
+                                }
+                              })}
+                            </div>
                           </div>
-                        </div>
-                      ))}
+                        ))}
+                      </div>
+                    </div>
+                    <div className="cart__overlay__product__info__howMany">
+                      <div
+                        onClick={() => increase_item(id, atts)}
+                        className="img_pointer"
+                      >
+                        <p>+</p>
+                      </div>
+                      <div>
+                        <p className="cart__overlay__product__info__howMany__p__no__border">
+                          {ele?.howMany}
+                        </p>
+                      </div>
+                      <div
+                        onClick={() => decrease_item(id, atts)}
+                        className="img_pointer"
+                      >
+                        <p>-</p>
+                      </div>
                     </div>
                   </div>
-                  <div className="cart__overlay__product__info__howMany">
-                    <div
-                      onClick={() => increase_item(ele?.item?.id, ele?.atts)}
-                      className="img_pointer"
-                    >
-                      <p>+</p>
-                    </div>
-                    <div>
-                      <p className="cart__overlay__product__info__howMany__p__no__border">
-                        {ele?.howMany}
-                      </p>
-                    </div>
-                    <div
-                      onClick={() => decrease_item(ele?.item?.id, ele?.atts)}
-                      className="img_pointer"
-                    >
-                      <p>-</p>
-                    </div>
+                  <div className="cart__overlay__product__pic">
+                    <img src={gallery[0]} alt="cart_overlay" />
                   </div>
                 </div>
-                <div className="cart__overlay__product__pic">
-                  <img src={ele?.item?.gallery[0]} alt="cart_overlay" />
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
           <div className="cart__total">
             <h5>Total</h5>
-            <p>
-              {currency?.symbol +
-                get_The_Total(cart, currency.label)}
-            </p>
+            <p>{currency?.symbol + get_The_Total(cart, currency.label)}</p>
           </div>
           <div className="cart__btn">
             <Link to="/cart" style={{ textDecoration: "none" }}>

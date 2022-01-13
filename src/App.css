@@ -2,3 +2,7 @@
     margin: 0;
     font-family: 'Raleway', sans-serif;
 }
+.category_page_product__Link{
+    text-decoration: none;
+    color: black;
+}

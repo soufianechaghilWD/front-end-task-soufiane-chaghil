@@ -10,11 +10,7 @@ import { Link, Navigate } from "react-router-dom";
 import Cart_Overlay from "./CartOverlay";
 import { get_categories_query, get_currency_query } from "../gqlQueries";
 
-
-
-
 class Header extends Component {
-
   constructor(props) {
     super(props);
 
@@ -33,8 +29,8 @@ class Header extends Component {
   }
 
   render() {
-
-    const {header_active_item, dispatch, redirect_sts, openCartDropDown} = this?.state
+    const { header_active_item, dispatch, redirect_sts, openCartDropDown } =
+      this?.state;
     const setOpenCartDropDown = () => {
       this.setState({ openCartDropDown: !openCartDropDown });
     };
@@ -50,7 +46,7 @@ class Header extends Component {
       }
     };
 
-    if ( redirect_sts === true) {
+    if (redirect_sts === true) {
       return <Navigate to="/" />;
     }
 
@@ -61,20 +57,24 @@ class Header extends Component {
             {({ loading, data }) => {
               return (
                 <ul>
-                  {data?.categories?.map((ele, idx) => (
-                    <li
-                      onClick={() => setHeaderActiveItem(ele?.name)}
-                      className={`header_item ${
-                        ele?.name === header_active_item
-                          ? "active_header_item"
-                          : ""
-                      }`}
-                      id={ele?.name}
-                      key={"id" + idx}
-                    >
-                      {ele?.name?.toUpperCase()}
-                    </li>
-                  ))}
+                  {data?.categories?.map((ele, idx) => {
+                    const { name } = ele;
+
+                    return (
+                      <li
+                        onClick={() => setHeaderActiveItem(name)}
+                        className={`header_item ${
+                          name === header_active_item
+                            ? "active_header_item"
+                            : ""
+                        }`}
+                        id={name}
+                        key={"id" + idx}
+                      >
+                        {name?.toUpperCase()}
+                      </li>
+                    );
+                  })}
                 </ul>
               );
             }}
