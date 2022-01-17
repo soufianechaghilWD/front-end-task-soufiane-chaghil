@@ -8,12 +8,11 @@ class Cart extends Component {
     super(props);
     this.state = {
       cart: this?.props?.cart,
-      setOpenCartDropDown: this?.props?.setOpenCartDropDown
+      setOpenCartDropDown: this?.props?.setOpenCartDropDown,
     };
   }
 
   render() {
-
     const show_Cart_Overlay = () => {
       if (window.location.pathname !== "/cart") {
         this.state.setOpenCartDropDown();

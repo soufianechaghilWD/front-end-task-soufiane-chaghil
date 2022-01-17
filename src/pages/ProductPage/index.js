@@ -21,9 +21,7 @@ class Index extends Component {
     this.setState({ product_id: id });
   }
 
-
   render() {
-
     return (
       <div>
         <Header />

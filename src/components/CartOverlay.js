@@ -92,54 +92,56 @@ class Cart_Overlay extends Component {
                             howMany}
                       </h5>
                       <div className="cart__overlay__product__info__atts">
-                        {attributes?.map((singleAtr, idx) => (
-                          <div key={"id" + idx}>
-                            <h5>{singleAtr?.name?.toUpperCase()}</h5>
-                            <div className="cart__overlay__product__info__single_att">
-                              {singleAtr?.items?.map((itemAtr, idx) => {
-                                if (singleAtr?.type === "swatch") {
-                                  return (
-                                    <div
-                                      key={"id" + idx}
-                                      style={{
-                                        background: `${itemAtr?.value}`,
-                                        color: `${itemAtr?.value}`,
-                                        border:
-                                          atts[singleAtr?.name]?.id ===
-                                          itemAtr?.id
-                                            ? "3px solid black"
-                                            : "1px solid #A6A6A6",
-                                      }}
-                                    ></div>
-                                  );
-                                } else {
-                                  return (
-                                    <div
-                                      key={"id" + idx}
-                                      className={
-                                        atts[singleAtr?.name]?.id ===
-                                        itemAtr?.id
-                                          ? "cart__overlay__product__info__single_att__selected"
-                                          : "cart__overlay__product__info__single_att__unselected"
-                                      }
-                                    >
-                                      {itemAtr?.displayValue === "Small"
-                                        ? "S"
-                                        : itemAtr?.displayValue === "Medium"
-                                        ? "M"
-                                        : itemAtr?.displayValue === "Large"
-                                        ? "L"
-                                        : itemAtr?.displayValue ===
-                                          "Extra Large"
-                                        ? "XL"
-                                        : itemAtr?.displayValue}
-                                    </div>
-                                  );
-                                }
-                              })}
+                        {attributes?.map((singleAtr, idx) => {
+                          const { name, items, type } = singleAtr;
+
+                          return (
+                            <div key={"id" + idx}>
+                              <h5>{name?.toUpperCase()}</h5>
+                              <div className="cart__overlay__product__info__single_att">
+                                {items?.map((itemAtr, idx) => {
+                                  const { value, id, displayValue } = itemAtr;
+                                  if (type === "swatch") {
+                                    return (
+                                      <div
+                                        key={"id" + idx}
+                                        style={{
+                                          background: `${value}`,
+                                          color: `${value}`,
+                                          border:
+                                            atts[name]?.id === id
+                                              ? "3px solid black"
+                                              : "1px solid #A6A6A6",
+                                        }}
+                                      ></div>
+                                    );
+                                  } else {
+                                    return (
+                                      <div
+                                        key={"id" + idx}
+                                        className={
+                                          atts[name]?.id === id
+                                            ? "cart__overlay__product__info__single_att__selected"
+                                            : "cart__overlay__product__info__single_att__unselected"
+                                        }
+                                      >
+                                        {displayValue === "Small"
+                                          ? "S"
+                                          : displayValue === "Medium"
+                                          ? "M"
+                                          : displayValue === "Large"
+                                          ? "L"
+                                          : displayValue === "Extra Large"
+                                          ? "XL"
+                                          : displayValue}
+                                      </div>
+                                    );
+                                  }
+                                })}
+                              </div>
                             </div>
-                          </div>
-                        ))}
+                          );
+                        })}
                       </div>
                     </div>
                     <div className="cart__overlay__product__info__howMany">
@@ -174,7 +176,7 @@ class Cart_Overlay extends Component {
             <p>{currency?.symbol + get_The_Total(cart, currency.label)}</p>
           </div>
           <div className="cart__btn">
-            <Link to="/cart" style={{ textDecoration: "none" }}>
+            <Link to="/cart" className="category_page_product__Link">
               <p className="cart__btn__bag">VIEW BAG</p>
             </Link>
             <button className="cart__btn__checkout">CHECK OUT</button>

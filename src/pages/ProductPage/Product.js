@@ -39,10 +39,13 @@ class Product extends Component {
       });
     };
 
+    const { gallery, brand, name, attributes, description, prices } =
+      this?.props?.product;
+
     return (
       <div className="product">
         <div className="product__pics">
-          {this?.props?.product?.gallery?.map((ele, idx) => {
+          {gallery?.map((ele, idx) => {
             return (
               <img
                 key={"id" + idx}
@@ -58,32 +61,33 @@ class Product extends Component {
         </div>
         <div className="product__info">
           <div>
-            <h1>{this?.props?.product?.brand}</h1>
-            <h2>{this?.props?.product?.name}</h2>
+            <h1>{brand}</h1>
+            <h2>{name}</h2>
           </div>
           <div>
-            {this?.props?.product?.attributes?.map((ele, idx) => {
+            {attributes?.map((ele, idx) => {
               const { name, items, type } = ele;
               return (
                 <div key={"id" + idx} className="product__atribut">
                   <h3>{name?.toUpperCase()}:</h3>
                   <div className="product__atribut__wraper">
                     {items?.map((item, id) => {
+                      const { value, Atid, displayValue } = item;
                       if (type === "swatch") {
                         return (
                           <div
                             onClick={() => setSelectedAtt(name, item)}
                             key={"id" + id}
                             style={{
-                              background: `${item?.value}`,
-                              color: `${item?.value}`,
+                              background: `${value}`,
+                              color: `${value}`,
                               border:
-                                this?.state?.selectedAtts[name]?.id === item?.id
+                                this?.state?.selectedAtts[name]?.id === Atid
                                   ? "3px solid black"
                                   : "1px solid #A6A6A6",
                             }}
                           >
-                            {item?.displayValue}
+                            {displayValue}
                           </div>
                         );
                       } else {
@@ -92,12 +96,12 @@ class Product extends Component {
                             onClick={() => setSelectedAtt(name, item)}
                             key={"id" + id}
                             className={
-                              this?.state?.selectedAtts[name]?.id === item?.id
+                              this?.state?.selectedAtts[name]?.id === Atid
                                 ? "product__atribut__wraper__selected"
                                 : "product__atribut__wraper__unselected"
                             }
                           >
-                            {item?.displayValue}
+                            {displayValue}
                           </div>
                         );
                       }
@@ -111,13 +115,13 @@ class Product extends Component {
             <h3>PRICE:</h3>
             <h3>
               {this.props?.currency?.symbol +
-                this?.props?.product?.prices?.filter(
+                prices?.filter(
                   (ele) => ele?.currency?.label === this.props?.currency?.label
                 )[0]?.amount}
             </h3>
           </div>
           <button onClick={addToCart}>ADD TO CART</button>
-          <div dangerouslySetInnerHTML={{__html: this?.props?.product?.description}} ></div>
+          <div dangerouslySetInnerHTML={{ __html: description }}></div>
         </div>
       </div>
     );

@@ -73,11 +73,14 @@ class Currency extends Component {
           />
           {this.state.openCurrenciesDropDown && (
             <ul className="currencies__dropdown" ref={this?.wrapperRef}>
-              {this.props?.currencies?.map((ele, idx) => (
-                <li key={"id" + idx} onClick={() => setCurrency(ele)}>
-                  {ele?.symbol + " " + ele?.label}
-                </li>
-              ))}
+              {this.props?.currencies?.map((ele, idx) => {
+                const { symbol, label } = ele;
+                return (
+                  <li key={"id" + idx} onClick={() => setCurrency(ele)}>
+                    {symbol + " " + label}
+                  </li>
+                );
+              })}
             </ul>
           )}
         </div>

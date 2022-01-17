@@ -1,6 +1,6 @@
-import cart_action from "./cart_action";
-import currency_action from "./currency_action";
-import header_active_item_action from "./header_active_item_action";
+import cart_action from "./cartAction";
+import currency_action from "./currencyAction";
+import header_active_item_action from "./headerActiveItemAction";
 
 const all_actions = {
   cart_action,

@@ -58,52 +58,55 @@ class Index extends Component {
                             howMany}
                       </h4>
                       <div className="cart__product__info__atts">
-                        {attributes?.map((singleAtr, idx) => (
-                          <div
-                            className="cart__product__info__single_att"
-                            key={"id" + idx}
-                          >
-                            {singleAtr?.items?.map((itemAtr, idx) => {
-                              if (singleAtr?.type === "swatch") {
-                                return (
-                                  <div
-                                    key={"id" + idx}
-                                    style={{
-                                      background: `${itemAtr?.value}`,
-                                      color: `${itemAtr?.value}`,
-                                      border:
-                                        atts[singleAtr?.name]?.id ===
-                                        itemAtr?.id
-                                          ? "3px solid black"
-                                          : "1px solid #A6A6A6",
-                                    }}
-                                  ></div>
-                                );
-                              } else {
-                                return (
-                                  <div
-                                    key={"id" + idx}
-                                    className={
-                                      atts[singleAtr?.name]?.id === itemAtr?.id
-                                        ? "cart__product__info__single_att__selected"
-                                        : "cart__product__info__single_att__unselected"
-                                    }
-                                  >
-                                    {itemAtr?.displayValue === "Small"
-                                      ? "S"
-                                      : itemAtr?.displayValue === "Medium"
-                                      ? "M"
-                                      : itemAtr?.displayValue === "Large"
-                                      ? "L"
-                                      : itemAtr?.displayValue === "Extra Large"
-                                      ? "XL"
-                                      : itemAtr?.displayValue}
-                                  </div>
-                                );
-                              }
-                            })}
-                          </div>
-                        ))}
+                        {attributes?.map((singleAtr, idx) => {
+                          const { items, type, name } = singleAtr;
+                          return (
+                            <div
+                              className="cart__product__info__single_att"
+                              key={"id" + idx}
+                            >
+                              {items?.map((itemAtr, idx) => {
+                                const { value, id, displayValue } = itemAtr;
+                                if (type === "swatch") {
+                                  return (
+                                    <div
+                                      key={"id" + idx}
+                                      style={{
+                                        background: `${value}`,
+                                        color: `${value}`,
+                                        border:
+                                          atts[name]?.id === id
+                                            ? "3px solid black"
+                                            : "1px solid #A6A6A6",
+                                      }}
+                                    ></div>
+                                  );
+                                } else {
+                                  return (
+                                    <div
+                                      key={"id" + idx}
+                                      className={
+                                        atts[name]?.id === id
+                                          ? "cart__product__info__single_att__selected"
+                                          : "cart__product__info__single_att__unselected"
+                                      }
+                                    >
+                                      {displayValue === "Small"
+                                        ? "S"
+                                        : displayValue === "Medium"
+                                        ? "M"
+                                        : displayValue === "Large"
+                                        ? "L"
+                                        : displayValue === "Extra Large"
+                                        ? "XL"
+                                        : displayValue}
+                                    </div>
+                                  );
+                                }
+                              })}
+                            </div>
+                          );
+                        })}
                       </div>
                     </div>
                     <div className="cart__product__info__howMany">
